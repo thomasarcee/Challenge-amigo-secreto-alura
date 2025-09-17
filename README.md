@@ -42,12 +42,12 @@ Permite agregar amigos a una lista, validando nombres y evitando duplicados, par
 ---
 
 ## Estructura del proyecto
-Challenge-amigo-secreto-alura/
-├── assets/
-│   └── Amigo_secreto_demo.png  # Captura usada en el README
-├── index.html
-├── style.css
-└── app.js
+
+- **assets/**
+  - Amigo_secreto_demo.png → Captura usada en el README
+- **index.html** → Página principal
+- **style.css** → Estilos
+- **app.js** → Lógica de la aplicación
 
 ## Lógica del sorteo
 	•	Los nombres se guardan en un array amigos.
