@@ -1,11 +1,11 @@
-#Challenge – Amigo Secreto
+## Challenge – Amigo Secreto
 
 Aplicación web creada como parte del **Challenge "Amigo Secreto"** de **Alura LATAM** y el programa **Oracle Next Education (ONE)**.  
 Permite agregar amigos a una lista, validando nombres y evitando duplicados, para luego sortear un amigo secreto de forma aleatoria.
 
 ---
 
-#Screen web funcionando
+## Screen web funcionando
 
 ![Demo](assets/Amigo_secreto_demo.png)
 
