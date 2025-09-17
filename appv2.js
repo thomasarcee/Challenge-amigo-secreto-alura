@@ -1,25 +1,26 @@
 // Estado: lista de amigos
 const amigos = [];
 
-// Funciones principales
+// Helpers DOM
 function getInputEl() {
   return document.getElementById('amigo') || document.querySelector('input#amigo, input[name="amigo"], input[data-id="amigo"]');
 }
-
 function getListaEl() {
   return document.getElementById('listaAmigos') || document.querySelector('#listaAmigos, ul#listaAmigos');
 }
-
 function getResultadoEl() {
   return document.getElementById('resultado') || document.querySelector('#resultado');
 }
 
-// Normaliza nombre para comparar 
-function normalizarNombre(nombre) {
-  return String(nombre || '').trim().toLowerCase();
+// Normaliza para mostrar y comparar
+function normalizarParaMostrar(nombre) {
+  return String(nombre || '').trim().replace(/\s+/g, ' ');
+}
+function normalizarParaComparar(nombre) {
+  return normalizarParaMostrar(nombre).toLowerCase();
 }
 
-// 1) Agregar nombres con validación y prevención de duplicados
+// 1) Agregar con validación y sin duplicados
 function agregarAmigo() {
   const input = getInputEl();
   if (!input) {
@@ -27,32 +28,36 @@ function agregarAmigo() {
     return;
   }
 
-  const nombreOriginal = String(input.value || '').trim();
-  if (nombreOriginal.length === 0) {
+  const nombreOriginal = normalizarParaMostrar(input.value);
+  if (!nombreOriginal) {
     alert('Por favor, inserte un nombre.');
     return;
   }
 
-  const nombreClave = normalizarNombre(nombreOriginal);
-
-  const existe = amigos.some((n) => normalizarNombre(n) === nombreClave);
+  const clave = normalizarParaComparar(nombreOriginal);
+  const existe = amigos.some(n => normalizarParaComparar(n) === clave);
   if (existe) {
     alert('Ese nombre ya está en la lista.');
+    input.select();
     return;
   }
 
   amigos.push(nombreOriginal);
   input.value = '';
+  input.focus();
   renderizarLista();
+
+  // Limpiar resultado si agregamos nuevos nombres
+  const resultadoEl = getResultadoEl();
+  if (resultadoEl) resultadoEl.innerHTML = '';
 }
 
-// 2) Recorrer lista
+// 2) Render de la lista de amigos
 function renderizarLista() {
   const lista = getListaEl();
   if (!lista) return;
 
   lista.innerHTML = '';
-
   for (let i = 0; i < amigos.length; i++) {
     const li = document.createElement('li');
 
@@ -67,38 +72,40 @@ function renderizarLista() {
 
     li.appendChild(nombreSpan);
     li.appendChild(eliminarBtn);
-
     lista.appendChild(li);
   }
 }
 
-// Eliminar amigo por índice
+// Eliminar por índice
 function eliminarAmigoPorIndice(indice) {
   if (indice < 0 || indice >= amigos.length) return;
   amigos.splice(indice, 1);
   renderizarLista();
 
   const resultadoEl = getResultadoEl();
-  if (resultadoEl && amigos.length === 0) {
-    resultadoEl.innerHTML = '';
-  }
+  if (resultadoEl && amigos.length === 0) resultadoEl.innerHTML = '';
 }
 
-// 3) Sortear un amigo aleatoriamente
+// 3) Sorteo aleatorio
 function sortearAmigo() {
   if (amigos.length === 0) {
     alert('No hay amigos para sortear. Agrega al menos uno.');
     return;
   }
+
   const indiceAleatorio = Math.floor(Math.random() * amigos.length);
   const amigoSorteado = amigos[indiceAleatorio];
+
   const resultadoEl = getResultadoEl();
   if (resultadoEl) {
-    resultadoEl.innerHTML = `🎉 Amigo secreto: <strong>${amigoSorteado}</strong>`;
+    resultadoEl.innerHTML = ''; // limpiar resultados previos
+    const li = document.createElement('li');
+    li.innerHTML = `🎉 Amigo secreto: <strong>${amigoSorteado}</strong>`;
+    resultadoEl.appendChild(li);
   }
 }
 
-// 4) Enter agrega automáticamente
+// 4) Enter agrega
 document.addEventListener('DOMContentLoaded', () => {
   const input = getInputEl();
   if (input) {
@@ -108,10 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
         agregarAmigo();
       }
     });
+    input.focus();
   }
 });
 
-// Funciones globales
+// Export global
 window.agregarAmigo = agregarAmigo;
 window.sortearAmigo = sortearAmigo;
 window.renderizarLista = renderizarLista;
