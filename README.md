@@ -13,7 +13,7 @@ Permite agregar amigos a una lista, validando nombres y evitando duplicados, par
 
 ---
 
-## 🎯 Objetivo del desafío
+## Objetivo del desafío
 
 - Practicar lógica de programación con **JavaScript**.
 - Capturar datos desde un input y manipular el **DOM**.
@@ -23,7 +23,7 @@ Permite agregar amigos a una lista, validando nombres y evitando duplicados, par
 
 ---
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
 - **Agregar nombres** a la lista con un botón o presionando *Enter*.
 - **Validación en vivo:** no permite campos vacíos ni nombres duplicados.
@@ -33,7 +33,7 @@ Permite agregar amigos a una lista, validando nombres y evitando duplicados, par
 
 ---
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 - **HTML5** – estructura semántica  
 - **CSS** – estilos y diseño responsivo  
